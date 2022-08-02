@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  {{ wine.name }}
+{% endblock %}
+{% block content %}
+  <div class="wine-detail">
+    <img src="{% if wine.image %}{{ wine.image.url }}{% else %}
+    {% static "img/no_image.png" %}{% endif %}">
+    <h1>{{ wine.name }}</h1>
+    <h2>
+      <a href="{{ wine.category.get_absolute_url }}">
+        {{ wine.category }}
+      </a>
+    </h2>
+    <p class="price">${{ wine.price }}</p>
+    {{ wine.description|linebreaks }}
+  </div>
+{% endblock %}

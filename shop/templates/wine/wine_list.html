@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.name }}{% else %}Wines{% endif %}
+{% endblock %}
+{% block content %}
+<div id="sidebar">
+    <h3>Categories</h3>
+    <ul>
+        <li {% if not category %}class="selected" {% endif %}>
+            <a href="{% url "shop:wine_list" %}">All</a>
+        </li>
+        {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected" {% endif %}>
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="main" class="wine-list">
+    <h1>{% if category %}{{ category.name }}{% else %}Wines
+        {% endif %}</h1>
+    {% for wine in wines %}
+    <div class="item">
+        <a href="{{ wine.get_absolute_url }}">
+            <img src="{% if wine.image %}{{ wine.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+        </a>
+        <a href="{{ wine.get_absolute_url }}">{{ wine.wine_name }}</a>
+        <br>
+        ${{ wine.price }}
+        <!-- <img src="../../static/02/2020-LA-PETITE-SYRAH-Domaine-les-Yeuses.240x700.27443.png" alt="rfdfd"> -->
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
