@@ -15,7 +15,7 @@
             {{ wine.category }}
         </a>
     </h2>
-    <p class="price">${{ wine.price }}</p>
+    <p class="price">£{{ wine.price }}</p>
     <form action="{% url "cart:cart_add" wine.id %}" method="post">
         {{ cart_wine_form }}
         {% csrf_token %}
