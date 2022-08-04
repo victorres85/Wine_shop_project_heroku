@@ -339,3 +339,14 @@ form div.field {
     color: #666;
     border-radius: 4px;
 }
+
+.bottle_img {
+    height: 200px;
+    width: auto;
+}
+
+
+.bottle_img_detail {
+    height: 200px;
+    width: 50px;
+}

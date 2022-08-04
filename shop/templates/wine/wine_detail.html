@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-  {{ wine.name }}
+{{ wine.name }}
 {% endblock %}
 {% block content %}
-  <div class="wine-detail">
-    <img src="{% if wine.image %}{{ wine.image.url }}{% else %}
-    {% static "img/no_image.png" %}{% endif %}">
+<div class="wine-detail">
+    <div class="teste">
+        <img class="bottle_img_detail" src="{% if wine.image %}{{ wine.image.url }}{% else %}
+    {% static " img/no_image.png" %}{% endif %}">
+    </div>
     <h1>{{ wine.name }}</h1>
     <h2>
-      <a href="{{ wine.category.get_absolute_url }}">
-        {{ wine.category }}
-      </a>
+        <a href="{{ wine.category.get_absolute_url }}">
+            {{ wine.category }}
+        </a>
     </h2>
-    <p class="price">${{ wine.price }}</p>
+    <p class="price">£{{ wine.price }}</p>
+    <form action="{% url "cart:cart_add" wine.id %}" method="post">
+        {{ cart_wine_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart">
+    </form>
     {{ wine.description|linebreaks }}
-  </div>
+</div>
 {% endblock %}

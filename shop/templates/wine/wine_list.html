@@ -23,11 +23,11 @@
     {% for wine in wines %}
     <div class="item">
         <a href="{{ wine.get_absolute_url }}">
-            <img src="{% if wine.image %}{{ wine.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+            <img src="{% if wine.image %}{{ wine.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class="bottle_img">
         </a>
         <a href="{{ wine.get_absolute_url }}">{{ wine.wine_name }}</a>
         <br>
-        ${{ wine.price }}
+        £{{ wine.price }}
         <!-- <img src="../../static/02/2020-LA-PETITE-SYRAH-Domaine-les-Yeuses.240x700.27443.png" alt="rfdfd"> -->
     </div>
     {% endfor %}

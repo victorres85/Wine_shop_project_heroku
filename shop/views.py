@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Wine, Category, Region, Country
+from cart.forms import CartAddProductForm
 # Create your views here.
 
 
@@ -42,3 +43,11 @@ def wine_detail(request, id, slug):
     wine = get_object_or_404(Wine, id=id, slug=slug, available=True)
 
     return render(request, 'wine/wine_detail.html', {'wine': wine})
+
+
+def wine_detail(request, id, slug):
+    wine = get_object_or_404(Wine, id=id,
+                             slug=slug,
+                             available=True)
+    cart_wine_form = CartAddProductForm()
+    return render(request, 'wine/wine_detail.html', {'wine': wine, 'cart_wine_form': cart_wine_form})
