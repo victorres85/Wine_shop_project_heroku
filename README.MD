@@ -29,3 +29,39 @@ workers as soon as possible, but you can also schedule them to run at a specific
 https://docs.celeryq.dev/en/stable/index.html.
 
 
+###  - Setting up *RabbitMQ*
+
+```
+docker pull rabbitm
+```
+
+```
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-management
+```
+
+we can then access our RabbitMQ dashboard on http://127.0.0.1:15672/ 
+
+
+###   - Setting up Celery
+
+create a new file on the root folder called celery.py and add the following code:
+
+```
+import os
+from celery import Celery
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wine_shop.settings')
+app = Celery('wine_shop')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()
+```
+
+We have then to add the following code to the __init--.py found on our project folder (wine_shop)
+```
+# import celery
+from .celery import app as celery_app
+__all__ = ['celery_app']
+```
+
+With all this done we can now start using Celery on our program
+
