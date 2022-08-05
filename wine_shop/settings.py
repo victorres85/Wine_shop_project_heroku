@@ -128,6 +128,15 @@ STATIC_URL = 'static/'
 
 CART_SESSION_ID = 'cart'
 
+# Email server configuration
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'victorres.emailtest@gmail.com'
+#EMAIL_HOST_PASSWORD = 'Django123'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
