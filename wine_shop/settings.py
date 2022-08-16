@@ -73,7 +73,9 @@ DATABASES = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+#  STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -120,6 +122,8 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51LTsEwAnyQlDbgoYzQdEvp3Xg9zqWSS5rtiEcMqcNpUXi
 STRIPE_SECRET_KEY = 'sk_test_51LTsEwAnyQlDbgoYrb5fGxl4xxG9LfZRiiIoSgtg5RiUllK0hn4AZExZxzdxg8fsgT4r3Ne8sdCm3HKUzsA7uyzq00Yk97Zlan'  #SECRET KEY
 
 STRIPE_WEBHOOK_SECRET = 'whsec_9add87442f529215da2f5b778f7b3f497cef37002b0811b1c1221dc916eea42f'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

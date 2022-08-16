@@ -20,6 +20,7 @@ def payment_process(request):
         # Stripe checkout session data
         session_data = {
             'mode': 'payment',
+            'client_reference_id': order.id,
             'success_url': success_url,
             'cancel_url': cancel_url,
             'line_items': []
@@ -39,9 +40,6 @@ def payment_process(request):
             })
         # create Stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
-        # link checkout session with order
-        order.stripe_id = session['payment_intent']
-        order.save()
         # redirect to Stripe payment form
         return redirect(session.url, code=303)
     else:

@@ -55,16 +55,5 @@ We will be notified whenever an event happens. We can check all the types of eve
 
 By clicking on TEST on the stripe webhooks page we can find the steps to setup our local enviroment to listen to Stripe Webhooks and we can also find an example in python on how to build the  webhook on our application.
 
-## IMPORTANT- SECURITY
-
-We have build a webhook endpoint which receives a json payload with the event detail, we then check the details to identify when a checkout session has been completed.
-WE MUST ALWAYS CHECK THE *Stripe-Signature* ON IN EACH EVENT SENT TO OUR ENDPOINT TO AVOID THIRD PARTY ATTACKS.
-The Stripe SDK provides a method to verify signatures.
-
-The end point is created on the file webhooks.py, where we will check the information sent by Stripe and if everything is correct we will then update our Order models to save the field paid as True.
-
-## Testing webhook notifications with Stripe CLI 
-
-https://stripe.com/docs/stripe-cli#install.
-
+When running the application on developing mode we have to remember to run the following code on terminal stripe listen --forward-to localhost:8000/payment/webhook/
 
