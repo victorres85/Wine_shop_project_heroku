@@ -57,3 +57,30 @@ By clicking on TEST on the stripe webhooks page we can find the steps to setup o
 
 When running the application on developing mode we have to remember to run the following code on terminal stripe listen --forward-to localhost:8000/payment/webhook/
 
+
+
+# Deploying on AWS EC2
+
+To deploy our project we have used Docker, Github and AWS EC2
+
+## Settings 
+ (wirte here any change made on settings, if none delete this section)
+
+## Dockerfile
+Created Dockerfile:
+  where we specifie which version of Python alpine version (alpine is a lightweight version for python ideal for docker) we are using and install all the dependencies of our application
+
+## Docker-Compose
+Created docker-composed to run the development server:
+
+## .dockerignore
+
+
+
+## ENV.DEV
+
+
+## Makefile
+
+
+

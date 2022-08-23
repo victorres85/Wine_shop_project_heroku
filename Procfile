@@ -1,0 +1,1 @@
+web:gunicorn WINE_SHOP_PROJECT.wsgi
