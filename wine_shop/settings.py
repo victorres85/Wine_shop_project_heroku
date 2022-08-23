@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-+%)59bb-wx7*0j9625oa&zs8(!&gh2xv+rplfm_uzlhh6sw*aj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','https://wine-shop-project.herokuapp.com/']
 
 # Application definition
 
