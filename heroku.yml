@@ -2,4 +2,4 @@ build:
   docker:
     django: dockerfile
 run:
-  web: gunicorn wine_shop.wsgi:application --bind 0.0.0.0:$PORT
+  django: gunicorn wine_shop.wsgi:application --bind 0.0.0.0:$PORT
