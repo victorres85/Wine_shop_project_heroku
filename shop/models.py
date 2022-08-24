@@ -14,7 +14,9 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['name']
-        indexes = [models.Index(fields=['name']), ]
+        indexes = [
+            models.Index(fields=['name']),
+        ]
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
@@ -26,18 +28,21 @@ class Category(models.Model):
 
 
 class Country(models.Model):
+
     class NewOldWorlChoice(models.TextChoices):
         NEW_WORLD = "New World", "New World"
         OLD_WORLD = "Old World", "Old World"
 
     country = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
-    new_old_world = models.CharField(
-        max_length=10, choices=NewOldWorlChoice.choices)
+    new_old_world = models.CharField(max_length=10,
+                                     choices=NewOldWorlChoice.choices)
 
     class Meta:
         ordering = ['country']
-        indexes = [models.Index(fields=['country']), ]
+        indexes = [
+            models.Index(fields=['country']),
+        ]
 
     def __str__(self):
         return self.country
@@ -49,12 +54,15 @@ class Country(models.Model):
 class Region(models.Model):
     region = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
-    country = models.ForeignKey(
-        Country, related_name='regions', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country,
+                                related_name='regions',
+                                on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['country']
-        indexes = [models.Index(fields=['country']), ]
+        indexes = [
+            models.Index(fields=['country']),
+        ]
 
     def __str__(self):
         return self.region
@@ -70,26 +78,31 @@ class Wine(models.Model):
         validators=[MaxValueValidator(datetime.date.today().year)])
     image = models.ImageField(upload_to='media/products/%y/%m/%d', blank=True)
     wine_producer = models.CharField(max_length=200)
-    country = models.ForeignKey(
-        Country, related_name='wine', on_delete=models.CASCADE)
-    region = models.ForeignKey(
-        Region, related_name='wine', on_delete=models.CASCADE)
-    category = models.ForeignKey(
-        Category, related_name='wine', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country,
+                                related_name='wine',
+                                on_delete=models.CASCADE)
+    region = models.ForeignKey(Region,
+                               related_name='wine',
+                               on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,
+                                 related_name='wine',
+                                 on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['wine_name']
-        indexes = [models.Index(fields=['id', 'slug']),
-                   models.Index(fields=['wine_name']),
-                   models.Index(fields=['-created'])]
+        indexes = [
+            models.Index(fields=['id', 'slug']),
+            models.Index(fields=['wine_name']),
+            models.Index(fields=['-created'])
+        ]
 
     def __str__(self):
         return self.wine_name
