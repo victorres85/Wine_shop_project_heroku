@@ -1,6 +1,7 @@
+
 # syntax=docker/dockerfile:1
 
-FROM python:3.8-slim-buster
+FROM python:3
 # Set up and activate virtual environment
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
