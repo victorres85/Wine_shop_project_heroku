@@ -17,8 +17,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','https://wine-shop-project.herokuapp.com/', 'wine-shop-project.herokuapp.com']
 
 
-REDIS_TLS_URL = 'rediss://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25540'
-CELERY_BROKER_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539'
 
 # Application definition
 
@@ -152,3 +150,14 @@ EMAIL_USE_TLS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+CELERY_BROKER_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539'
