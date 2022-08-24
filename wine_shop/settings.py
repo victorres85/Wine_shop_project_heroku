@@ -19,7 +19,7 @@ ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost','wine-shop-project.herokuapp.
 CSRF_TRUSTED_ORIGINS = ["https://wine-shop-project.herokuapp.com"]
 
 
-
+# a
 # Application definition
 
 INSTALLED_APPS = [
