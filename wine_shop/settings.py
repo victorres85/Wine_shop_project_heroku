@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-+%)59bb-wx7*0j9625oa&zs8(!&gh2xv+rplfm_uzlhh6sw*aj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','https://wine-shop-project.herokuapp.com/', 'wine-shop-project.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','https://wine-shop-project.herokuapp.com/', 'wine-shop-project.herokuapp.com']
 
 
 
@@ -140,7 +140,7 @@ STRIPE_WEBHOOK_SECRET = 'whsec_9add87442f529215da2f5b778f7b3f497cef37002b0811b1c
 #  Email server configuration
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'victorres.emailtest@gmail.com'
-EMAIL_HOST_PASSWORD = 'Django123'
+EMAIL_HOST_PASSWORD = 'vwriiyfdaixevizz'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -150,14 +150,6 @@ EMAIL_USE_TLS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get('REDIS_URL'),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
 
-CELERY_BROKER_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539'
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
