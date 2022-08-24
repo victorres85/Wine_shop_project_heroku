@@ -1,5 +1,5 @@
 build:
   docker:
-    django: Dockerfile
+    web: Dockerfile
 run:
-  django: gunicorn wine_shop.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn wine_shop.wsgi:application --bind 0.0.0.0:$PORT
