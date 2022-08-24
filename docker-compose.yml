@@ -1,6 +1,11 @@
 version: "3.8"
    
 services:
+     # Redis
+    redis:
+        image: redis:alpine
+        container_name: redis
+
     web:
         build: .
         container_name: django
@@ -20,8 +25,10 @@ services:
             - pgdb
             - redis
     celery:
-        build: .
-        command: celery -A wine_shop worker -l INFO
+        restart: always
+        build: 
+            context: .
+        command: celery -A wine_shop worker -l DEBUG
         volumes:
             - .:/usr/src/app
         environment:
@@ -32,6 +39,7 @@ services:
         depends_on:
             - django
             - redis
+        container_name: celery
     pgdb:
         image: postgres
         container_name: pgdb
@@ -41,8 +49,7 @@ services:
             - POSTGRES_PASSWORD=postgres
         volumes:
             - pgdata:/var/lib/postgresql/data/
-    redis:
-        image: "redis:alpine"
+   
         
 volumes:
     pgdata:
