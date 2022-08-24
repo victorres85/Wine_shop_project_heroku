@@ -1,2 +1,6 @@
 aws
 .env
+
+__pycache__
+*.pcy
+db.sqlite3
