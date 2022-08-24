@@ -26,7 +26,7 @@ services:
             - .:/usr/src/app
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] wine-shop-project.herokuapp.com
             - CELERY_BROKER=redis://redis:6379/0
             - CELERY_BACKEND=redis://redis:6379/0
         depends_on:
