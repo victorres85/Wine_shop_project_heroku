@@ -9,8 +9,6 @@ services:
             - .:/usr/src/app/
         ports:
             - "8000:8000"
-        env_file:
-            - ./env.dev
         environment:
             - DEBUG=1
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
@@ -27,8 +25,8 @@ services:
         environment:
             - DEBUG=1
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-            - CELERY_BROKER=redis://redis:6379/0
-            - CELERY_BACKEND=redis://redis:6379/0
+            - CELERY_BROKER=redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539
+            - CELERY_BACKEND=redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539
         depends_on:
             - django
             - redis
