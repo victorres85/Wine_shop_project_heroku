@@ -14,8 +14,8 @@ app = Celery('wine_shop')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
-app.conf.update(BROKER_URL=config('REDIS_URL'),
-                CELERY_RESULT_BACKEND=config('REDIS_URL'))
+app.conf.update(BROKER_URL=os.environ('REDIS_URL'),
+                CELERY_RESULT_BACKEND=os.environ('REDIS_URL'))
 
 
 @app.task(bind=True)
