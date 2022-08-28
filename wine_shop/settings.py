@@ -153,6 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
 '''
+REDIS_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539'
 CELERY_BROKER_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25540'
 BROKER_URL = 'url'
 CELERY_RESULT_BACKEND = 'url'
@@ -161,6 +162,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 '''
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+'''
 
 CACHES = {
     "default": {
@@ -170,4 +172,4 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
-}'''
+}
