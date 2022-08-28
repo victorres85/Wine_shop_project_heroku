@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,10 +13,12 @@ SECRET_KEY = 'django-insecure-+%)59bb-wx7*0j9625oa&zs8(!&gh2xv+rplfm_uzlhh6sw*aj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost','wine-shop-project.herokuapp.com/', 'wine-shop-project.herokuapp.com']
+ALLOWED_HOSTS = [
+    '0.0.0.0', '127.0.0.1', 'localhost', 'wine-shop-project.herokuapp.com/',
+    'wine-shop-project.herokuapp.com'
+]
 
 CSRF_TRUSTED_ORIGINS = ["https://wine-shop-project.herokuapp.com"]
-
 
 # a
 # Application definition
@@ -75,7 +76,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'd533kovdp1rulp',
         'USER': 'jkpsdgqzygnvmr',
-        'PASSWORD': 'bf480b48251a7e0fed82c9e868d5fe5c5ba4bce3c8798a491058620e45b6c26c',
+        'PASSWORD':
+        'bf480b48251a7e0fed82c9e868d5fe5c5ba4bce3c8798a491058620e45b6c26c',
         'HOST': 'ec2-52-30-75-37.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
@@ -89,7 +91,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,8 +128,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-
-
 CART_SESSION_ID = 'cart'
 
 # STRIP SETTINGS
@@ -150,14 +149,16 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 '''
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
 '''
 CELERY_BROKER_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25540'
-
+BROKER_URL = 'url'
+CELERY_RESULT_BACKEND = 'url'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 '''
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
