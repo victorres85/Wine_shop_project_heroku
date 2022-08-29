@@ -3,16 +3,18 @@
 
 import os
 from celery import Celery
- # from __future__ import absolute_import
-from django.conf import settings
+from decouple import config
+
+
+#from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wine_shop.settings')
 
-app = Celery('wine_shop', broker='redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25540')
+app = Celery('wine_shop', broker='redis://redis:8000/0')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()
 
 
 

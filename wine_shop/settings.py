@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+%)59bb-wx7*0j9625oa&zs8(!&gh2xv+rplfm_uzlhh6sw*aj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=0)
 
 ALLOWED_HOSTS = [
     '0.0.0.0', '127.0.0.1', 'localhost', 'wine-shop-project.herokuapp.com/',
@@ -34,6 +36,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'payment.apps.PaymentConfig',
     'orders.apps.OrdersConfig',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -149,43 +153,21 @@ EMAIL_USE_TLS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
-#CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
+#
+ # CELERY_RESULT_BACKEND = "django-db"
+# This configures Redis as the datastore between Django + Celery
+CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054@ec2-52-210-234-212.eu-west-1.compute.amazonaws.com:9610')
 
-'''
-REDIS_URL = 'redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539'
-REDIS_PASSWORD = 'paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054'
-REDIS_PORT = 9610
-REDIS_HOST = 'ec2-52-210-234-212.eu-west-1.compute.amazonaws.com'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539")
-'''
-CACHE_TTL = 60 * 1500
+# REDIS_PASSWORD ='paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054'
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:pcbbab5e12031f5fee7b14e4eae72e04d94cc5d4b72e880c9e6171313bc6b46bc@ec2-54-194-139-149.eu-west-1.compute.amazonaws.com:25539",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "example",
-    }
-}
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 
-'''
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-'''
-'''
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get('REDIS_URL'),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
-'''
+# this allows you to schedule items in the Django admin.
+
+#CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+
+#CELERY_BROKER_URL = f'redis://localhost:6379/4'
+#CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+#CELERY_RESULT_BACKEND = f'redis://localhost:6379/1'
+
+
+#----HEROKU----

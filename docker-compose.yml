@@ -1,14 +1,11 @@
 version: "3.8"
    
 services:
-     # Redis
-    redis:
-        image: redis:alpine
-        container_name: redis
+     
 
     web:
         build: .
-        container_name: django
+        container_name: django2
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - app_data:/usr/src/app/
@@ -19,8 +16,7 @@ services:
         environment:
             - DEBUG=1
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-            # - CELERY_BROKER=redis://redis:6379/0
-            # - CELERY_BACKEND=redis://redis:6379/0
+
         depends_on:
             - pgdb
             - redis
@@ -33,11 +29,9 @@ services:
             - .:/usr/src/app
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] wine-shop-project.herokuapp.com
-            - CELERY_BROKER=redis://:paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054@ec2-52-210-234-212.eu-west-1.compute.amazonaws.com:9610
-            - CELERY_BACKEND=redis://:paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054@ec2-52-210-234-212.eu-west-1.compute.amazonaws.com:9610
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 
         depends_on:
-            - django
+            - web
             - redis
         container_name: celery
     pgdb:
@@ -49,7 +43,12 @@ services:
             - POSTGRES_PASSWORD=postgres
         volumes:
             - pgdata:/var/lib/postgresql/data/
+    # Redis
+    redis:
+        image: redis:alpine
+        container_name: redis
    
         
 volumes:
     pgdata:
+    app_data:
