@@ -5,50 +5,50 @@ services:
 
     web:
         build: .
-        container_name: django2
-        command: python manage.py runserver 0.0.0.0:8000
+        container_name: django2 
+        command: >
+            sh -c "python manage.py migrate &&
+                   python manage.py runserver 0.0.0.0:8000"
         volumes:
             - app_data:/usr/src/app/
         ports:
             - "8000:8000"
         env_file:
             - ./env.dev
-        environment:
-            - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+        
 
         depends_on:
             - pgdb
-            - redis
-    celery:
-        restart: always
-        build: 
-            context: .
-        command: celery -A wine_shop worker -l DEBUG
-        volumes:
-            - .:/usr/src/app
-        environment:
-            - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 
-        depends_on:
-            - web
-            - redis
-        container_name: celery
+           # - rabbitmq
+    # celery:
+    #     restart: always
+    #     build: 
+    #         context: .
+    #     container_name: celery
+    #     command: celery -A wine_shop worker -l info
+    #     volumes:
+    #         - .:/usr/src/app
+    #     env_file:
+    #         - ./.env.dev
+
+    #     depends_on:
+    #         - pgdb
+    #         - web
+    #         - rabbitmq
     pgdb:
         image: postgres
         container_name: pgdb
-        environment:
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
+        env_file:
+            - ./.env.dev
         volumes:
             - pgdata:/var/lib/postgresql/data/
-    # Redis
-    redis:
-        image: redis:alpine
-        container_name: redis
-   
-        
+
+    # rabbitmq:
+    #     image: rabbitmq:3.7-alpine
+    #     container_name: 'rabbitmq'
+
+
+
 volumes:
     pgdata:
     app_data:

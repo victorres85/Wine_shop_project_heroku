@@ -7,8 +7,24 @@ from cart.cart import Cart
 import weasyprint
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
-from .tasks import order_created
+from django.core.mail import send_mail
+
+#from ..filesremoved.tasks import order_created
 from django.conf import settings
+
+def order_created(order_id):
+    """
+   Task to send an e-mail notification when an order is
+   successfully created.  
+   """
+    order = Order.objects.get(id=order_id)
+    subject = f'Order nr. {order.id}'
+    message = f'Dear {order.first_name},\n\n' \
+              f'You have successfully placed an order.' \
+              f'Your order ID is {order.id}.'
+    mail_sent = send_mail(subject, message, 'admin@wine_shop.com',
+                          [order.email])
+    return mail_sent
 
 
 def order_create(request):
@@ -25,7 +41,8 @@ def order_create(request):
             # clear the cart
             cart.clear()
             # launch asynchronous task
-            order_created.delay(order.id)
+
+            order_created(order.id)
             #set the order in the session
             request.session['order_id'] = order.id
             # redirect for payment

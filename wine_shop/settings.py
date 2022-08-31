@@ -36,8 +36,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'payment.apps.PaymentConfig',
     'orders.apps.OrdersConfig',
-    'django_celery_beat',
-    'django_celery_results',
+
 ]
 
 MIDDLEWARE = [
@@ -153,21 +152,13 @@ EMAIL_USE_TLS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#
- # CELERY_RESULT_BACKEND = "django-db"
-# This configures Redis as the datastore between Django + Celery
-CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054@ec2-52-210-234-212.eu-west-1.compute.amazonaws.com:9610')
 
-# REDIS_PASSWORD ='paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054'
+#broker_url = 'amqp://victor:PASSWORD_FOR_EVENTS@localhost:5672/victor'
+CELERY_BROKER_URL = 'amqp://rabbitmq'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'amqp://rabbitmq'
+BROKER_URL = 'amqp://rabbitmq'
 
+#CELERY_ENABLED = True
+#EVENTS_PUSH_BACKEND_OPTIONS = {"url": "amqp://victor:PASSWORD_FOR_EVENTS@localhost:5672/victor"}
 
-# this allows you to schedule items in the Django admin.
-
-#CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
-
-#CELERY_BROKER_URL = f'redis://localhost:6379/4'
-#CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-#CELERY_RESULT_BACKEND = f'redis://localhost:6379/1'
-
-
-#----HEROKU----

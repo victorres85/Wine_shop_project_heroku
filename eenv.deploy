@@ -4,3 +4,8 @@ DEBUG=True
 redis_password =paf878bdf156761e7d20ea352865d643c02bac79da28fce83c716a73e7e762054
 redis_host=ec2-52-210-234-212.eu-west-1.compute.amazonaws.com
 redis_port=9610
+
+DB_HOST=pgdb
+DB_NAME=web
+DB_USER=postgres
+DB_PASS=postgres

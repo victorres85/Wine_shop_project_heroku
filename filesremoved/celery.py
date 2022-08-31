@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#
+from __future__ import absolute_import, unicode_literals
 import os
+from django.conf import settings
 from celery import Celery
-from decouple import config
 
-
-#from django.conf import settings
-
-# set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wine_shop.settings')
 
-app = Celery('wine_shop', broker='redis://redis:8000/0')
-
+app = Celery('wine_shop')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
+
 
 
 

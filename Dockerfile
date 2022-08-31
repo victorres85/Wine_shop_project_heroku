@@ -14,7 +14,13 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY requirements.txt .
+#run command bellow has been added on 30/08 at 09:40
+# RUN apk add --update --no-cache postgresql-client jpeg-dev && \
+#     apk add --update --no-cache --virtual .tmp-build-deps \
+#     gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
+
 RUN pip install -r requirements.txt
+#RUN apk del .tmp-build-deps
 
 WORKDIR /usr/src/app
 
