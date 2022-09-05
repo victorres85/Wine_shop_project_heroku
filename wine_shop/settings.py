@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'payment.apps.PaymentConfig',
     'orders.apps.OrdersConfig',
+    'coupons.apps.CouponsConfig',
 
 ]
 
@@ -151,14 +152,4 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-#broker_url = 'amqp://victor:PASSWORD_FOR_EVENTS@localhost:5672/victor'
-CELERY_BROKER_URL = 'amqp://rabbitmq'
-CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'amqp://rabbitmq'
-BROKER_URL = 'amqp://rabbitmq'
-
-#CELERY_ENABLED = True
-#EVENTS_PUSH_BACKEND_OPTIONS = {"url": "amqp://victor:PASSWORD_FOR_EVENTS@localhost:5672/victor"}
 

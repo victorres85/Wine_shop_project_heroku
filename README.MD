@@ -1,3 +1,91 @@
+# INTRODUCTION
+
+I have done this Wine-Shop project following most of the content on the book <strong>"Django 4 By Example - Fourth Edition"</strong> by Antonio Mele.
+
+It has been a great learning tool, specially as I got access to the book before it's final release, some parts of the code was still broken and I had to figure out the soluctions by myself.
+
+That happend when working with, stripe which had a recent update on their API which not allowing me to find the transaction's id, I had to go throw Stripe documentation to find the updated information on how to corrected comunicated with Stripe.
+
+The Database has also been made by me, as I use to work as Sommelier, I though would be great to test my skills on something that had some connection to what I used to do.
+
+The deployment, has been all made by myself, building the Docker containers and making the deployment on Heroku with the help of GitHub Actions.
+
+<br>
+
+# Steps taken to complete the Wine-Shop
+1. Create project, its apps and link it all to the main project.
+2. Build our Models:
+    * Order
+    * OrderItem
+    * Category
+    * Country
+    * Region 
+    * Wine
+3. Building a shopping cart
+4. 
+
+# Shopping Cart
+
+To build the shopping cart we had use the Django Sessions Framework which allows us to store data for each visitor. The data will be stored on the server with the help of cookies to with the session ID.
+
+We have used the session middleware to manage the sending and receiving of the cookies.
+
+The Middleware which manages the sessions is the one bellow, and it is created automatically when we start a new project.
+'django.contrib.sessions.middleware.SessionMiddleware'
+
+We can access the current session by using the request.session
+
+examples of session settings:
+
+```
+SESSION_COOKIE_AGE: The duration of session cookies in seconds. The default value is 1209600 (two weeks).
+SESSION_COOKIE_DOMAIN: The domain used for session cookies. Set this to mydomain.com to enable cross-domain cookies or use None for a standard domain cookie.
+SESSION_COOKIE_HTTPONLY: Whether to use HttpOnly flag on the session cookie. If this is set to True, client-side JavaScript will not be able to access the session cookie. The default value is True for increased security against user session hijacking.
+SESSION_COOKIE_SECURE: A Boolean indicating that the cookie should only be sent if the connection is an HTTPS connection. The default value is False.
+SESSION_EXPIRE_AT_BROWSER_CLOSE: A Boolean indicating that the session has to expire when the browser is closed. The default value is False.
+SESSION_SAVE_EVERY_REQUEST: A Boolean that, if True, will save the session to the database on every request. The session expiration is also updated each time it's saved. The default value is False.
+```
+
+For more information on Sessions;
+https://docs.djangoproject.com/en/4.0/ref/settings/#sessions.
+
+## Storing shopping carts in sessions
+
+To store the shooping cart in sessions we have created a structure to be serialized to json.
+
+This structure has been created on the *cart.py*  file
+
+
+# Custumers Orders
+
+Once the costumer has checked out we have to register the order in the database 
+
+We have created 2 Models, one for costumer information and a second one for the order items
+### ModelInline
+
+We have created 2 models one for the costumer information and a second one for items orders, we have then used the ModelInline class for the items order model in order to include it as an inline form inside the Orders admin form.
+
+## Form
+Once the Models have been created is now time to create the checkout form 
+
+# Context processors
+
+For now the message "Your cart is empty" is constantly displayed, we will now change it in order to show the number of items and the total amount.
+
+As this information has to be displayed in all pages, we have to create a context processor to include the current cart in the request context.
+
+## A context processor 
+is a Python function that takes the request object as an argument and returns a dictionary that gets added to the request context. 
+Context processors come in handy when we need to make something available globally to all templates.
+
+### step1
+
+Create context_processor.py file which will return our cart as a Dictionary
+
+### step3
+add it the file to our settings, 'context_processors': [... ]
+
+
 # Asynchronous Tasks
 
 ## Workers, Message Queues, and Message Brokers
@@ -55,16 +143,33 @@ We will be notified whenever an event happens. We can check all the types of eve
 
 By clicking on TEST on the stripe webhooks page we can find the steps to setup our local enviroment to listen to Stripe Webhooks and we can also find an example in python on how to build the  webhook on our application.
 
-When running the application on developing mode we have to remember to run the following code on terminal stripe listen --forward-to localhost:8000/payment/webhook/
+When running the application on developing mode we have to remember to run the following code on terminal 
+```
+stripe listen --forward-to localhost:8000/payment/webhook/
+```
+
+## IMPORTANT- SECURITY
+
+We have build a webhook endpoint which receives a json payload with the event detail, we then check the details to identify when a checkout session has been completed.
+WE MUST ALWAYS CHECK THE *Stripe-Signature* ON IN EACH EVENT SENT TO OUR ENDPOINT TO AVOID THIRD PARTY ATTACKS.
+The Stripe SDK provides a method to verify signatures.
+
+The end point is created on the file webhooks.py, where we will check the information sent by Stripe and if everything is correct we will then update our Order models to save the field paid as True.
+
+## Testing webhook notifications with Stripe CLI 
+
+https://stripe.com/docs/stripe-cli#install.
+
+
+# Coupon System
+We have created a new app on our Django project to allow our shop to use discount coupons.
+
+For that a new Model has been created a model which allow us to generate discount coupons to be used n number of times and to be applied to the whole shopping cart, the coupons should have an expering date. 
 
 
 
-# Deploying on AWS EC2
 
-To deploy our project we have used Docker, Github and AWS EC2
-
-## Settings 
- (wirte here any change made on settings, if none delete this section)
+# Deploying 
 
 ## Dockerfile
 Created Dockerfile:
@@ -73,14 +178,6 @@ Created Dockerfile:
 ## Docker-Compose
 Created docker-composed to run the development server:
 
-## .dockerignore
-
-
-
-## ENV.DEV
-
-
-## Makefile
 
 
 

@@ -76,7 +76,7 @@ class Wine(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     vintage = models.PositiveIntegerField(
         validators=[MaxValueValidator(datetime.date.today().year)])
-    image = models.ImageField(upload_to='media/products/%y/%m/%d', blank=True)
+    image = models.ImageField(upload_to='products/%y/%m/%d', blank=True)
     wine_producer = models.CharField(max_length=200)
     country = models.ForeignKey(Country,
                                 related_name='wine',
