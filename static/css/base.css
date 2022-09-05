@@ -625,7 +625,8 @@ ul.errorlist {
 }
 
 .wine-detail img {
-    width: 40%;
+    width: auto;
+    height: 200px;
     float: left;
     padding: 0 20px 20px 0;
 }

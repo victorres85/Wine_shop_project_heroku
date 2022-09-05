@@ -6,7 +6,7 @@
 {% block content %}
 <div class="wine-detail">
     <div class="teste">
-        <img class="bottle_img_detail" src="{% if wine.image %}{{ wine.image.url }}{% else %}
+        <img src="{% if wine.image %}{{ wine.image.url }}{% else %}
     {% static " img/no_image.png" %}{% endif %}">
     </div>
     <h1>{{ wine.name }}</h1>
