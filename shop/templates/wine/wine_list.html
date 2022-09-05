@@ -22,13 +22,18 @@
         {% endif %}</h1>
     {% for wine in wines %}
     <div class="item">
+        <div class="wine-image">
         <a href="{{ wine.get_absolute_url }}">
             <img src="{% if wine.image %}{{ wine.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class="bottle_img">
         </a>
+        </div>
+        <div class="wine-description">
         <a href="{{ wine.get_absolute_url }}">{{ wine.wine_name }}</a>
         <br>
-        £{{ wine.price }}
+        <p class='price-tag'><a href="{{ wine.get_absolute_url }}">£{{ wine.price }}</a></p>
         <!-- <img src="../../static/02/2020-LA-PETITE-SYRAH-Domaine-les-Yeuses.240x700.27443.png" alt="rfdfd"> -->
+        <p><a href="{{ wine.get_absolute_url }}">{{ wine.description|truncatewords:12 }}</a></p>
+        </div>
     </div>
     {% endfor %}
 </div>
