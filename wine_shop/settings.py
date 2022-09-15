@@ -75,11 +75,11 @@ WSGI_APPLICATION = 'wine_shop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd533kovdp1rulp',
-        'USER': 'jkpsdgqzygnvmr',
+        'NAME': 'd67hjsbpd1rbsq',
+        'USER': 'kmdzdcwavddnqn',
         'PASSWORD':
-        'bf480b48251a7e0fed82c9e868d5fe5c5ba4bce3c8798a491058620e45b6c26c',
-        'HOST': 'ec2-52-30-75-37.eu-west-1.compute.amazonaws.com',
+        '24ed2f40bffd651a07c274b24fde6addbcbd8c3e587c811faf6937f8bd26c632',
+        'HOST': 'ec2-54-220-86-118.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
