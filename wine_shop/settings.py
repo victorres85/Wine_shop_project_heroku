@@ -2,7 +2,6 @@ from pathlib import Path
 import os
 from decouple import config
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+%)59bb-wx7*0j9625oa&zs8(!&gh2xv+rplfm_uzlhh6sw*aj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '0.0.0.0', '127.0.0.1', 'localhost', 'wine-shop-project.herokuapp.com/',
@@ -37,7 +36,6 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'orders.apps.OrdersConfig',
     'coupons.apps.CouponsConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -152,4 +150,3 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
