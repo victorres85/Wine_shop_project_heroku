@@ -1,18 +1,7 @@
 # INTRODUCTION
 
-I have done this Wine-Shop project following most of the content on the book <strong>"Django 4 By Example - Fourth Edition"</strong> by Antonio Mele.
 
-It has been a great learning tool, specially as I got access to the book before it's final release, some parts of the code was still broken and I had to figure out the soluctions by myself.
-
-That happend when working with, stripe which had a recent update on their API which not allowing me to find the transaction's id, I had to go throw Stripe documentation to find the updated information on how to corrected comunicated with Stripe.
-
-The Database has also been made by me, as I use to work as Sommelier, I though would be great to test my skills on something that had some connection to what I used to do.
-
-The deployment, has been all made by myself, building the Docker containers and making the deployment on Heroku with the help of GitHub Actions.
-
-<br>
-
-# Steps taken to complete the Wine-Shop
+## Steps taken to complete the Wine-Shop
 1. Create project, its apps and link it all to the main project.
 2. Build our Models:
     * Order
