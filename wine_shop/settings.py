@@ -17,7 +17,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','https://wine-shop-project.herokuapp.com/', 'wine-shop-project.herokuapp.com']
 
 
+CSRF_TRUSTED_ORIGINS = ["https://wine-shop-project.herokuapp.com"]
 
+# a
 # Application definition
 
 INSTALLED_APPS = [
@@ -31,6 +33,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'payment.apps.PaymentConfig',
     'orders.apps.OrdersConfig',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +45,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'wine_shop.urls'
@@ -89,6 +92,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
