@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import ctypes.util
+
+# Get the path to the fontconfig library
+fontconfig_path = ctypes.util.find_library('fontconfig')
+if fontconfig_path is None:
+    # Manually set the path if it could not be found
+    fontconfig_path = '/opt/homebrew/Cellar/fontconfig/2.15.0/lib/libfontconfig.1.dylib'
+
+# Load the library
+fontconfig = ctypes.CDLL(fontconfig_path)
 
 from io import BytesIO
 from celery import shared_task
-import weasyprint
+# import weasyprint
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -25,8 +35,8 @@ def payment_completed(order_id):
     # generate PDF
     html = render_to_string('orders/order/pdf.html', {'order': order})
     out = BytesIO()
-    stylesheets = [weasyprint.CSS(settings.STATIC_ROOT / 'css/pdf.css')]
-    weasyprint.HTML(string=html).write_pdf(out, stylesheets=stylesheets)
+    # stylesheets = [weasyprint.CSS(settings.STATIC_ROOT / 'css/pdf.css')]
+    # weasyprint.HTML(string=html).write_pdf(out, stylesheets=stylesheets)
     # attach PDF file
     email.attach(f'order_{order.id}.pdf', out.getvalue(), 'application/pdf')
     # send e-mail

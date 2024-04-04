@@ -22,8 +22,8 @@ Your shopping cart
         <tr>
             <td>
                 <a href="{{ wine.get_absolute_url }}">
-                    <img class="bottle_img_detail" src="{% if wine.image %}{{ wine.image.url }}
-                {% else %}{% static " img/no_image.png" %}{% endif %}">
+                    <img style="width: auto; height:200px" src="{% if wine.image %}{{ wine.image.url }}
+                {% else %}{% static ' img/no_image.png' %}{% endif %}">
                 </a>
             </td>
             <td>{{ wine.wine_name }}</td>

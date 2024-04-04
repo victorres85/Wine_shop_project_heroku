@@ -323,7 +323,7 @@ ul.errorlist {
 }
 
 .recommendations.cart img {
-    width: 120px;
+    width: auto;
 }
 
 /* braintree hosted fields */
@@ -348,5 +348,5 @@ form div.field {
 
 .bottle_img_detail {
     height: 200px;
-    width: 50px;
+    width: auto;
 }

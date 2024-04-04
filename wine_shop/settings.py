@@ -70,14 +70,15 @@ WSGI_APPLICATION = 'wine_shop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd533kovdp1rulp',
-        'USER': 'jkpsdgqzygnvmr',
-        'PASSWORD': 'bf480b48251a7e0fed82c9e868d5fe5c5ba4bce3c8798a491058620e45b6c26c',
-        'HOST': 'ec2-52-30-75-37.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME',''),
+        'USER': os.environ.get('DB_USER',''),
+        'PASSWORD': os.environ.get('DB_PASSWORD',''),
+        'PORT': 5432,
     }
 }
+
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -130,18 +131,16 @@ USE_TZ = True
 CART_SESSION_ID = 'cart'
 
 # STRIP SETTINGS
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51LTsEwAnyQlDbgoYzQdEvp3Xg9zqWSS5rtiEcMqcNpUXikA648ZzNfsWcci2P3fSxLEe2uRPSLdFKxSFSUCMlqP800TGxujuYs'  # PUBLISHABLE KEY
-STRIPE_SECRET_KEY = 'sk_test_51LTsEwAnyQlDbgoYrb5fGxl4xxG9LfZRiiIoSgtg5RiUllK0hn4AZExZxzdxg8fsgT4r3Ne8sdCm3HKUzsA7uyzq00Yk97Zlan'  #SECRET KEY
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 
-STRIPE_WEBHOOK_SECRET = 'whsec_9add87442f529215da2f5b778f7b3f497cef37002b0811b1c1221dc916eea42f'
-
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #  Email server configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'victorres.emailtest@gmail.com'
-EMAIL_HOST_PASSWORD = 'vwriiyfdaixevizz'
-EMAIL_PORT = 587
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
 EMAIL_USE_TLS = True
 
 # Default primary key field type
@@ -151,5 +150,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
