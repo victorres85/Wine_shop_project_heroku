@@ -1,6 +1,6 @@
-aws
 .env
-
-__pycache__
-*.pcy
-db.sqlite3
+Procfile
+.vscode/
+__pycache__/
+*.pyc
+.github/

@@ -1,39 +1,35 @@
 version: "3.8"
    
 services:
-     
-
-    web:
+    django:
         build: .
-        container_name: django2
+        container_name: django
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
-            - app_data:/usr/src/app/
+            - .:/usr/src/app/
         ports:
             - "8000:8000"
-        env_file:
-            - ./env.dev
         environment:
             - DEBUG=1
             - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-
+            - CELERY_BROKER=redis://localhost:6379/0
+            - CELERY_BACKEND=redis://localhost:6379/0
         depends_on:
             - pgdb
             - redis
     celery:
-        restart: always
-        build: 
-            context: .
-        command: celery -A wine_shop worker -l DEBUG
+        build: .
+        command: celery -A wine_shop worker -l INFO
         volumes:
-            - .:/usr/src/app
+            - .:/usr/src/app/
         environment:
             - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+            - CELERY_BROKER=redis://localhost:6379/0
+            - CELERY_BACKEND=redis://localhost:6379/0
         depends_on:
-            - web
+            - django
             - redis
-        container_name: celery
     pgdb:
         image: postgres
         container_name: pgdb
@@ -43,12 +39,8 @@ services:
             - POSTGRES_PASSWORD=postgres
         volumes:
             - pgdata:/var/lib/postgresql/data/
-    # Redis
     redis:
-        image: redis:alpine
-        container_name: redis
-   
+        image: "redis:alpine"
         
 volumes:
     pgdata:
-    app_data:

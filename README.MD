@@ -1,86 +1,108 @@
-# Asynchronous Tasks
+# Wine E-commerce
+The Wine E-commerce is a Django project that allows users to browse and purchase wines. The project is divided into two main applications: the store and the cart. The store application allows users to browse wines, view details, and add them to the cart. The cart application allows users to view and update their cart, and proceed to checkout. The project also includes a payment process with Stripe, and asynchronous tasks with Celery and RabbitMQ.
 
-## Workers, Message Queues, and Message Brokers
-
-While your web server processes requests and returns responses, you need a second task-based server, 
-named worker, to process the asynchronous tasks. One or multiple workers can be running and executing 
-tasks in the background. These workers can access the database, process files, send e-mails, etc. 
-Workers can even queue future tasks. All while keeping the main web server free to process HTTP requests.
-
-To tell the workers what tasks to execute we need to send messages. We communicate with brokers by 
-adding messages to a message queue, which is basically a first in, first out (FIFO) data structure. 
-
-## RabbitMQ AND Celery
-
-On our application we will be using RabbitMQ as a Message broker and the Celery to manage our workers.
-
-*RabbitMW* is a message broker that implements the Advanced Message Queuing Protocol (AMQP), which standardizes messaging using Producers, broker and Consumers, it helps to increase loose coupling and scalability.
-The RabbitMQ receives a message from the producer(application), it will then direct this message to the relevant queue so it can wait it's turn to be processed by the worker (which in our case will be managed by Celery).
-RabbitMQ has 5 different types of exchanges (ways), to move the message to the relevant queue:
-    - fanout
-    - direct
-    - topic
-    - header
-    - default
+# Features
+- Browse wines
+- View wine details
+- Add wines to the cart
+- View and update the cart
+- Proceed to checkout
+- Enter shipping information
+- Enter payment details
+- Payment process with Stripe
+- Receive email confirmation
+- Asynchronous tasks with Celery and RabbitMQ
 
 
-*Celery*, not only allow you to create asynchronous tasks easily and let them be executed by 
-workers as soon as possible, but you can also schedule them to run at a specific time. 
-https://docs.celeryq.dev/en/stable/index.html.
+# Installation
+To install the project, clone the repository and create a virtual environment. Then, install the dependencies with the following command:
+```
+pip install -r requirements.txt
+```
+After installing the dependencies, create a `.env` file in the root directory of the project with the following
+environment variables:
+```
+DEBUG=True
+SECRET_KEY=your_secret_key
+ALLOWED_HOSTS=your_allowed_hosts
+
+STRIPE_PUBLIC_KEY=your_stripe_public_key
+STRIPE_PUBLISHABLE_KEY = your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+
+EMAIL_HOST=your_email_host
+EMAIL_PORT=your_email_port
+EMAIL_HOST_USER=your_email_host_user
+EMAIL_HOST_PASSWORD=your_email_host_password
+EMAIL_USE_TLS=True
+
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_PORT=your_database_port
+
+CELERY_BROKER_URL=your_celery_broker_url
+CELERY_RESULT_BACKEND=your_celery_result_backend
+```
 
 
-# PAYMENT PROCESS WITH STRIPE
+# Running Migrations
+Before running the project, apply the migrations with the following command:
+```
+python manage.py migrate
+```
 
-Our payment process will be used with stripe for that we have pip installed the stripe packet we have also opened an account on stripe where we are currently working on developing mode
-
-To process the payment 3 views will be created: 
-  - payment_process -> which will create a Stripe checkout session and redirects the lient to the Stripe-hosted payment form.
-  - payment_completed -> which displays a message confirming the payment
-  - payment_canceled -> which displays a message for canceled payments
-
-
-On our settings we have added the keys colected from our stripe account, this is what will link our application to stripe. If the payment is sucessful stripe will redirect the user to the payment_completed.html otherwise will redirect the custumer to payment_canceled.html.
-
-# Webhook
- 
-Stripe can push real-time events to our application by using webhooks. Which is an event driven API and not the request driven API we are used to. 
-
-Stripe can send a HTTP request to a URL of our application to notify successful payments in real-time. These events will be notified asynchronously, when the event occurs.
-
-We have builded a webhook endpoint to receive Stripe events. The webhook consists of a view that receives a JSON payload with the event information to process it. We use the event information to mark orders as paid when the checkout session is successfully completed.
-
-https://dashboard.stripe.com/test/webhooks
-On the website above we can see a schema of how Stripe notifies our our integration asynchronously.
-We will be notified whenever an event happens. We can check all the types of events that Stripe sends at https://stripe.com/docs/api/events/types
-
-By clicking on TEST on the stripe webhooks page we can find the steps to setup our local enviroment to listen to Stripe Webhooks and we can also find an example in python on how to build the  webhook on our application.
-
-When running the application on developing mode we have to remember to run the following code on terminal stripe listen --forward-to localhost:8000/payment/webhook/
+# Creating a Superuser
+To create a superuser, execute the following command:
+```
+python manage.py createsuperuser
+```
 
 
-
-# Deploying on AWS EC2
-
-To deploy our project we have used Docker, Github and AWS EC2
-
-## Settings 
- (wirte here any change made on settings, if none delete this section)
-
-## Dockerfile
-Created Dockerfile:
-  where we specifie which version of Python alpine version (alpine is a lightweight version for python ideal for docker) we are using and install all the dependencies of our application
-
-## Docker-Compose
-Created docker-composed to run the development server:
-
-## .dockerignore
+# Running the Project
+To run the project, execute the following command:
+```
+python manage.py runserver
+```
+The project will be available at `http://127.0.0.1:8000/`.
 
 
+# Store Application
+The store application allows users to browse wines, view details, and add them to the cart. The wines are displayed on the home page and can be filtered by category. Users can click on a wine to view details and add it to the cart
 
-## ENV.DEV
+## Home Page
+<img src="./README_IMG/store.png"/>
+
+## Wine Details
+<img src="./README_IMG/product_details.png"/>
 
 
-## Makefile
+# Cart Application
+The cart application allows users to view and update their cart, and proceed to checkout. Users can view the wines in their cart, update the quantity, and remove wines. Users can proceed to checkout by entering their shipping information and payment details.
+
+## Cart
+<img src="./README_IMG/cart.png"/>
+
+## Checkout
+<img src="./README_IMG/checkout.png"/>
 
 
+# Payment Process with Stripe
+The project includes a payment process with Stripe. Users can proceed to checkout and enter their payment details. The payment is processed with Stripe and users receive a confirmation message.
+
+## Payment
+<img src="./README_IMG/payment.png"/>
+
+## Confirmation
+<img src="./README_IMG/confirmation.png"/>
+
+
+# Asynchronous Tasks with Celery and RabbitMQ
+The project includes asynchronous tasks with Celery and RabbitMQ. When a user places an order, an asynchronous task is created to send an email confirmation. The task is processed by a Celery worker and the user receives an email confirmation.
+
+
+
+# Conclusion
+The Wine E-commerce is a Django project that allows users to browse and purchase wines. The project includes a store application that allows users to browse wines, view details, and add them to the cart. The cart application allows users to view and update their cart, and proceed to checkout. The project also includes a payment process with Stripe, and asynchronous tasks with Celery and RabbitMQ.
 
